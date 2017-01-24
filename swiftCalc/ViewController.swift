@@ -51,6 +51,7 @@ class ViewController: UIViewController {
         
         let displayNum = sender.currentTitle!
         if self.digitHasDecimal {self.decimalBtn.isEnabled = false}
+        else {self.decimalBtn.isEnabled = true}
         
         if displayNum.contains("."){ digitHasDecimal = true}
         if userActive {
@@ -84,6 +85,7 @@ class ViewController: UIViewController {
     @IBAction func clearDisplay(_ sender: Any) {
         inputStack.removeAll()
         userActive = false
+        self.digitHasDecimal = false
         operatorSym = nil
         displayValue = 0
     }
