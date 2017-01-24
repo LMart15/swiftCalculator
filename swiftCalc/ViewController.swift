@@ -36,7 +36,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //displayNumber_lbl.text = ("\(displayNum)")
+        displayNumber_lbl.text = ("\(0)")
     }
     
 
@@ -69,10 +69,10 @@ class ViewController: UIViewController {
             inputStack.append(displayValue)
             
             switch operatorSym! {
-            case "+": performOperation() { $0 + $1 }
-            case "-": performOperation() { $1 - $0 }
-            case "x": performOperation() { $0 * $1 }
-            case "/": performOperation() { $1 / $0 }
+            case "+": doCalculation() { $0 + $1 }
+            case "-": doCalculation() { $1 - $0 }
+            case "x": doCalculation() { $0 * $1 }
+            case "/": doCalculation() { $1 / $0 }
                 
             default: break
             }
@@ -82,6 +82,14 @@ class ViewController: UIViewController {
         
     }
     
+    @IBAction func percentBtn(_ sender: UIButton) {
+        if displayValue != 0{
+        displayValue = Double(displayNumber_lbl.text!)! / 100
+        displayNumber_lbl.text! = ("\(displayValue)")
+        }
+    }
+    
+    
     @IBAction func clearDisplay(_ sender: Any) {
         inputStack.removeAll()
         userActive = false
@@ -90,7 +98,7 @@ class ViewController: UIViewController {
         displayValue = 0
     }
     
-    func performOperation( operation: (Double, Double) -> Double)  {
+    func doCalculation( operation: (Double, Double) -> Double)  {
         displayValue = operation(inputStack.removeLast(), inputStack.removeLast())
         print("\(displayValue) ")
         inputStack.append(displayValue)
