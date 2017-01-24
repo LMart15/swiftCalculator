@@ -10,7 +10,7 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    var inputStack = [Double]()
+    var numInputStack = [Double]()
     var operatorSym: String?
     var userActive = false
     var digitHasDecimal = false
@@ -44,12 +44,13 @@ class ViewController: UIViewController {
         userActive = false
         self.digitHasDecimal = false
         operatorSym = sender.currentTitle
-        inputStack.append(Double(displayNumber_lbl.text!)!)
+        numInputStack.append(Double(displayNumber_lbl.text!)!)
     }
     
     @IBAction func numberInputHandler(_ sender: UIButton) {
         
         let displayNum = sender.currentTitle!
+        
         if self.digitHasDecimal {self.decimalBtn.isEnabled = false}
         else {self.decimalBtn.isEnabled = true}
         
@@ -66,7 +67,7 @@ class ViewController: UIViewController {
         
         if operatorSym != nil {
             userActive = false
-            inputStack.append(displayValue)
+            numInputStack.append(displayValue)
             
             switch operatorSym! {
             case "+": doCalculation() { $0 + $1 }
@@ -76,8 +77,6 @@ class ViewController: UIViewController {
                 
             default: break
             }
-            
-            print("\(inputStack) " + operatorSym!)
         }
         
     }
@@ -91,7 +90,7 @@ class ViewController: UIViewController {
     
     
     @IBAction func clearDisplay(_ sender: Any) {
-        inputStack.removeAll()
+        numInputStack.removeAll()
         userActive = false
         self.digitHasDecimal = false
         operatorSym = nil
@@ -99,9 +98,9 @@ class ViewController: UIViewController {
     }
     
     func doCalculation( operation: (Double, Double) -> Double)  {
-        displayValue = operation(inputStack.removeLast(), inputStack.removeLast())
+        displayValue = operation(numInputStack.removeLast(), numInputStack.removeLast())
         print("\(displayValue) ")
-        inputStack.append(displayValue)
+        numInputStack.append(displayValue)
     }
 
 }
