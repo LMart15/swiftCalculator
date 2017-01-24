@@ -10,25 +10,23 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    var operandStack = [Double]()
+    var inputStack = [Double]()
     var operatorSym: String?
-    var userIsInTheMiddleOfTypingANumber = false
+    var userActive = false
     var digitHasDecimal = false
     
-    // not used for user typing, just calculations
     var displayValue: Double {
         get {
             return Double(displayNumber_lbl.text!)!
         }
         set {
-            // remove ".0" from display
             if newValue == floor(newValue) {
                 displayNumber_lbl.text = "\(Int(newValue))"
             } else {
                 displayNumber_lbl.text = "\(newValue)"
             }
             
-            userIsInTheMiddleOfTypingANumber = false
+            userActive = false
         }
     }
     
@@ -42,27 +40,27 @@ class ViewController: UIViewController {
     
 
     @IBAction func operationInputHandler(_ sender: UIButton) {
-        userIsInTheMiddleOfTypingANumber = false
+        userActive = false
         operatorSym = sender.currentTitle
-        operandStack.append(Double(displayNumber_lbl.text!)!)
+        inputStack.append(Double(displayNumber_lbl.text!)!)
     }
     
     @IBAction func numberInputHandler(_ sender: UIButton) {
         
-        let digit = sender.currentTitle!
-        if userIsInTheMiddleOfTypingANumber {
-            displayNumber_lbl.text! += digit
+        let displayNum = sender.currentTitle!
+        if userActive {
+            displayNumber_lbl.text! += displayNum
         } else {
-            displayNumber_lbl.text = digit
-            userIsInTheMiddleOfTypingANumber = true
+            displayNumber_lbl.text = displayNum
+            userActive = true
         }
     }
     
     @IBAction func equalsInputHandler(_ sender: UIButton) {
         
         if operatorSym != nil {
-            userIsInTheMiddleOfTypingANumber = false
-            operandStack.append(displayValue)
+            userActive = false
+            inputStack.append(displayValue)
             
             switch operatorSym! {
             case "+": performOperation() { $0 + $1 }
@@ -73,22 +71,22 @@ class ViewController: UIViewController {
             default: break
             }
             
-            print("\(operandStack) " + operatorSym!)
+            print("\(inputStack) " + operatorSym!)
         }
         
     }
     
     @IBAction func clearDisplay(_ sender: Any) {
-        operandStack.removeAll()
-        userIsInTheMiddleOfTypingANumber = false
+        inputStack.removeAll()
+        userActive = false
         operatorSym = nil
         displayValue = 0
     }
     
     func performOperation( operation: (Double, Double) -> Double)  {
-        displayValue = operation(operandStack.removeLast(), operandStack.removeLast())
+        displayValue = operation(inputStack.removeLast(), inputStack.removeLast())
         print("\(displayValue) ")
-        operandStack.append(displayValue)
+        inputStack.append(displayValue)
     }
 
 }
