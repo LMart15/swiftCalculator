@@ -31,6 +31,7 @@ class ViewController: UIViewController {
     }
     
     @IBOutlet weak var displayNumber_lbl: UILabel!
+    @IBOutlet weak var decimalBtn: UIButton!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,6 +42,7 @@ class ViewController: UIViewController {
 
     @IBAction func operationInputHandler(_ sender: UIButton) {
         userActive = false
+        self.digitHasDecimal = false
         operatorSym = sender.currentTitle
         inputStack.append(Double(displayNumber_lbl.text!)!)
     }
@@ -48,6 +50,9 @@ class ViewController: UIViewController {
     @IBAction func numberInputHandler(_ sender: UIButton) {
         
         let displayNum = sender.currentTitle!
+        if self.digitHasDecimal {self.decimalBtn.isEnabled = false}
+        
+        if displayNum.contains("."){ digitHasDecimal = true}
         if userActive {
             displayNumber_lbl.text! += displayNum
         } else {

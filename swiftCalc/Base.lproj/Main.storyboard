@@ -291,6 +291,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="decimalBtn" destination="OFk-Aj-53Z" id="Twv-Rr-3Z7"/>
                         <outlet property="displayNumber_lbl" destination="EHG-tb-puh" id="n28-dZ-39F"/>
                     </connections>
                 </viewController>
