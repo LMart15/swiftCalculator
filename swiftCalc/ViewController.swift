@@ -9,17 +9,28 @@
 import UIKit
 
 class ViewController: UIViewController {
+    
+    var currentNum = Double()
+    var operationResult = Double()
+    var displayNum:Int = 0
+    
+    @IBOutlet weak var displayNumber_lbl: UILabel!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        //displayNumber_lbl.text = ("\(displayNum)")
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    @IBAction func numberInputHandler(_ sender: UIButton) {
+        
+        displayNumber_lbl.text = displayNumber_lbl.text! + sender.currentTitle!
     }
+    
 
+    @IBAction func clearDisplay(_ sender: Any) {
+        displayNumber_lbl.text = ("\(displayNum)")
+    }
 
 }
 
